@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles */
+        .nav-search {
+            flex: 1;
+            max-width: 1200px;
+        }
+        .nav-search select {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+        .nav-search input {
+            border-radius: 0;
+        }
+        .nav-search button {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            background-color: #febd69;
+        }
+        .nav-search button:hover {
+            background-color: #f3a847;
+        }
+        .carousel-item {
+            min-width: 100%;
+            transition: transform 0.5s ease;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .mobile-menu {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    <header class="bg-gray-900 text-white">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold text-orange-400">Amazon</a>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="nav-search flex mx-4">
+                    <div class="relative">
+                        <select class="h-10 px-2 bg-gray-100 border border-gray-300 text-sm text-gray-700">
+                            <option>All</option>
+                            <option>Electronics</option>
+                            <option>Books</option>
+                            <option>Home</option>
+                            <option>Fashion</option>
+                        </select>
+                    </div>
+                    <input type="text" class="w-full h-10 px-4 border border-gray-300 focus:outline-none">
+                    <button class="h-10 px-4 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Right Nav -->
+                <div class="flex items-center space-x-4">
+                    <div class="dropdown relative">
+                        <button class="flex items-center text-sm">
+                            <span>Hello, Sign in</span>
+                            <span class="font-bold ml-1">Account & Lists</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu absolute hidden right-0 mt-2 w-48 bg-white text-gray-800 rounded shadow-lg py-1 z-10">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Your Account</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Your Orders</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sign Out</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-sm">
+                        <span>Returns</span>
+                        <span class="font-bold">& Orders</span>
+                    </a>
+                    
+                    <a href="#" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span class="ml-1 font-bold">Cart</span>
+                        <span class="ml-1 bg-orange-400 text-xs px-2 py-1 rounded-full">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu Toggle -->
+    <div class="mobile-menu bg-gray-800 text-white p-3">
+        <div class="container mx-auto">
+            <button id="menu-toggle" class="flex items-center text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <span class="ml-2">All</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu-content" class="hidden bg-gray-700 text-white">
+        <div class="container mx-auto px-4 py-2">
+            <a href="#" class="block py-2 border-b border-gray-600">Sign In</a>
+            <a href="#" class="block py-2 border-b border-gray-600">Today's Deals</a>
+            <a href="#" class="block py-2 border-b border-gray-600">Customer Service</a>
+            <a href="#" class="block py-2 border-b border-gray-600">Registry</a>
+            <a href="#" class="block py-2 border-b border-gray-600">Gift Cards</a>
+            <a href="#" class="block py-2">Sell</a>
+        </div>
+    </div>
+    
+    <!-- Category Navigation -->
+    <div class="desktop-menu bg-gray-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center space-x-4 text-sm py-2">
+                <a href="#" class="flex items-center px-2 hover:border border-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <span class="ml-1">All</span>
+                </a>
+                <a href="#" class="px-2">Today's Deals</a>
+                <a href="#" class="px-2">Customer Service</a>
+                <a href="#" class="px-2">Registry</a>
+                <a href="#" class="px-2">Gift Cards</a>
+                <a href="#" class="px-2">Sell</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hero Banner/Carousel -->
+    <div class="relative overflow-hidden bg-gray-200">
+        <div id="carousel" class="flex transition-transform duration-500 ease-in-out">
+            <div class="carousel-item flex-shrink-0 w-full">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5c05bb3e-3555-4abf-a091-ce6cc93c9613.png" alt="Prime member benefits promotion showing fast shipping benefits and exclusive deals" class="w-full h-full object-cover">
+            </div>
+            <div class="carousel-item flex-shrink-0 w-full">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cca64183-123d-4093-bee7-10a9d2f39f51.png" alt="Smart home devices sale with voice assistants, security cameras, and lighting systems" class="w-full h-full object-cover">
+            </div>
+            <div class="carousel-item flex-shrink-0 w-full">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/43847bbe-2169-47b3-b6d4-f39c1611c24a.png" alt="Back to school essentials promotion with laptops, notebooks, and stationery" class="w-full h-full object-cover">
+            </div>
+        </div>
+        <button id="carousel-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button id="carousel-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Featured Products -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Today's Deals</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <!-- Product 1 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3519d719-6b0d-4909-a3aa-3f95844f9e48.png" alt="Wireless noise-cancelling headphones in black with closeup of ear cup design" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Premium Wireless Headphones</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★☆
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(2,541)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$129.99</span>
+                        <span class="text-sm text-gray-500 line-through ml-1">$199.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6ed83dfc-10d5-404f-9a91-4accefc7f4ef.png" alt="4K Smart TV with slim bezel design shown in a modern living room setup" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">55" 4K Smart TV</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★★
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(4,326)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$499.99</span>
+                        <span class="text-sm text-gray-500 line-through ml-1">$699.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6b2317a1-257f-469c-9611-2c66c81c6628.png" alt="Fitness smartwatch with heart rate monitor and multiple sport modes" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Fitness Smartwatch</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★☆
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(1,887)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$89.99</span>
+                        <span class="text-sm text-gray-500 line-through ml-1">$129.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/85daa12c-78b6-46a0-b981-8ef416fcd3de.png" alt="Home espresso machine with milk frother and metal finish" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Espresso Machine</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★☆
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(1,254)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$159.99</span>
+                        <span class="text-sm text-gray-500 line-through ml-1">$249.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3d31e6fb-204d-4369-bb7c-2a32f641aa54.png" alt="Gaming laptop with RGB keyboard lighting and high performance specs" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Gaming Laptop</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★★
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(3,762)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$1,299.99</span>
+                        <span class="text-sm text-gray-500 line-through ml-1">$1,599.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- More Products Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Customers also bought</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <!-- Product 1 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c0b32d34-a26a-4461-bff5-f0d4fd73d248.png" alt="Bluetooth speaker with waterproof design shown by poolside" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Waterproof Speaker</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★☆
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(1,876)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$79.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f1be443d-8b46-461b-9d39-be6aaf57fe1a.png" alt="Smart home security camera with night vision and motion detection" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Security Camera</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★☆
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(2,145)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$59.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8ecb1761-24d9-458b-b24e-cc549fa190f4.png" alt="Ergonomic computer mouse with adjustable DPI and RGB lighting" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Ergonomic Mouse</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★☆
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(987)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$34.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2a1aae7e-cc05-4c80-9179-7ef22877c970.png" alt="Wireless charging pad compatible with multiple devices" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Wireless Charger</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★☆☆
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(654)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$24.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card bg-white p-4 rounded shadow transition duration-300">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b9cd8f51-404b-4470-9387-f65d836f6edb.png" alt="Backpack with laptop compartment and USB charging port" class="w-full h-48 object-cover">
+                    <h3 class="text-lg font-medium mt-2">Laptop Backpack</h3>
+                    <div class="flex items-center mt-1">
+                        <div class="flex text-yellow-400">
+                            ★★★★★
+                        </div>
+                        <span class="text-xs text-gray-500 ml-1">(3,265)</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-lg font-bold">$49.99</span>
+                    </div>
+                    <button class="mt-2 w-full py-1 bg-yellow-400 hover:bg-yellow-500 rounded text-sm">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Get to Know Us</h3>
+                    <ul class="text-sm">
+                        <li class="mb-1"><a href="#" class="hover:underline">Careers</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">About Amazon</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Investor Relations</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Amazon Devices</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Make Money with Us</h3>
+                    <ul class="text-sm">
+                        <li class="mb-1"><a href="#" class="hover:underline">Sell products on Amazon</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Sell on Amazon Business</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Become an Affiliate</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Advertise Your Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Amazon Payment Products</h3>
+                    <ul class="text-sm">
+                        <li class="mb-1"><a href="#" class="hover:underline">Amazon Business Card</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Shop with Points</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Reload Your Balance</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Amazon Currency Converter</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Let Us Help You</h3>
+                    <ul class="text-sm">
+                        <li class="mb-1"><a href="#" class="hover:underline">Amazon and COVID-19</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Your Account</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Your Orders</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Shipping Rates & Policies</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Returns & Replacements</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Help</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8">
+                <div class="flex justify-center">
+                    <a href="#" class="text-2xl font-bold text-orange-400">Amazon</a>
+                </div>
+                <div class="mt-4 text-center text-xs">
+                    <p>Conditions of Use Privacy Notice © 1996-2023, Amazon.com, Inc. or its affiliates</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menuContent = document.getElementById('mobile-menu-content');
+            menuContent.classList.toggle('hidden');
+        });
+        
+        // Carousel Functionality
+        const carousel = document.getElementById('carousel');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        
+        let currentIndex = 0;
+        const itemWidth = items[0].clientWidth;
+        
+        function updateCarousel() {
+            carousel.style.transform = translateX(-${currentIndex * 100}%);
+        }
+        
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel();
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            updateCarousel();
+        });
+        
+        // Auto-advance carousel every 5 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel();
+        }, 5000);
+        
+        // Initialize carousel
+        updateCarousel();
+        
+        // Shopping Cart Counter
+        const addToCartButtons = document.querySelectorAll('.product-card button');
+        const cartCounter = document.querySelector('.bg-orange-400');
+        let cartCount = 0;
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                cartCount++;
+                cartCounter.textContent = cartCount;
+                
+                // Show notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg';
+                notification.textContent = 'Added to Cart!';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('opacity-0');
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
